@@ -1,0 +1,104 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="jumbotron">
+    <h1 class="display-4">Productos:</h1>
+    <br>
+
+    <hr>
+
+    <h2>Crear/Editar Producto:</h2>
+    <form>
+        <div class="form-group">
+            <label for="descripcion">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="cantidad">Cantidad</label>
+                <input type="number" class="form-control" id="cantida" placeholder="Cantidad">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="precio">Precio</label>
+                <input type="number" class="form-control" id="precio" placeholder="Precio">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripcion</label>
+            <textarea class="form-control" id="descripcion" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="imageurl1">Imagen 1</label>
+            <input type="text" class="form-control" id="imageurl1" placeholder="Url imagen">
+        </div>
+        <div class="form-group">
+            <label for="imageurl2">Imagen 2</label>
+            <input type="text" class="form-control" id="imageurl2" placeholder="Url imagen">
+        </div>
+        <div class="form-group">
+            <select class="custom-select" id="inputGroupSelect01">
+                <option selected>Categroia</option>
+                <option value="1">Guitarra</option>
+                <option value="2">Piano</option>
+                <option value="3">Violin</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+
+    <hr>
+
+    <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
+        <b>Buscar:</b>
+        <input class="form-control mr-sm-2" type="text" name="key" placeholder="Nombre" size="15" />
+        <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">Search</button>
+    </form>
+
+    <br>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link active" href="/">Todos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/pianos">Pianos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/guitarras">Guitarras</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="/baterias">Baterias</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/flautas">Flautas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/violines">Violines</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/mas_vistos">Mas Visitados</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/mas_vendidos">Mas Vendidos</a>
+        </li>
+    </ul>
+    <br>
+    <div class="card-columns">
+        {% for product in products %}
+        <div class="card text-center border-info" style="height:580px;">
+            <img class="card-img-top" src="{{product['imageurl1']}}" alt="Card image cap" style="width:300px;height:300px;">
+            <div class="card-body">
+                <h5 class="card-title">{{product['nombre']}}</h5>
+                <p class="card-text">{{product['descripcion']}}</p>
+                <a href="#" class="btn btn-primary">Ver</a>
+                <a href="#" class="btn btn-danger">Eliminar</a>
+                <a href="#" class="btn btn-success">Editar</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+
+</div>
+
+{% endblock %}
