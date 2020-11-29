@@ -13,6 +13,39 @@ def listaTodos():
     products_l = products.find()
     return render_template('home.html', products=products_l)
 
+@app.route('/addProducto', methods=["POST"])
+def addProducto():
+    nombre = request.form['nombre']
+    precio = request.form['precio']
+    descripcion = request.form['descripcion']
+    cantidad = request.form['cantidad']
+    imageurl1 = request.form['imageurl1']
+    imageurl2 = request.form['imageurl2']
+    categoria = request.form['categoria']
+    vistas=0
+    cantidad_vendidas=0
+
+    productToAdd={
+        "nombre" : nombre, 
+        "precio" : precio, 
+        "descripcion" : descripcion, 
+        "cantidad" : cantidad, 
+        "imageurl1" : imageurl1, 
+        "imageurl2" : imageurl2, 
+        "categoria" : categoria, 
+        "vistas" : vistas, 
+        "cantidad_vendidas" : cantidad_vendidas
+    }
+
+    products.insert_one(productToAdd)
+    return listaTodos()
+
+@app.route('/eliminarProducto')
+def eliminarProducto():
+    id_prd = request.values.get("_id")
+    products.delete_one({"_id": ObjectId(id_prd)})
+    return listaTodos()
+
 @app.route('/pianos')
 def listaPianos():
     products_l = products.find({"categoria":"Piano Digital"})
@@ -55,7 +88,7 @@ def listaMasVendidos():
 @app.route("/search", methods=["GET"])
 def search():
     key=request.values.get("key")
-    products_l=products.find({"nombre":ObjectId(key)})
+    products_l=products.find({"nombre":(key)})
     return render_template('home.html',products=products_l)
 
 @app.route('/contact')
